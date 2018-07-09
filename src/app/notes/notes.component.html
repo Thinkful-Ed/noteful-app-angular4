@@ -1,8 +1,8 @@
-<article class="notes">
-    <h1>Notes</h1>
+<section class="notes">
+    <h3>Notes</h3>
     <ul>
-      <li *ngFor="let note of notes" class="card">
-        <span class="title">{{note.title}}</span> {{note.content}}
-      </li>
+        <li *ngFor="let note of _notes" class="card">
+        <span class="title">{{note.title}}:</span> {{note.content}}
+        </li>
     </ul>
-  </article>
+</section>
