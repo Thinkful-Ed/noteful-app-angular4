@@ -1,8 +1,19 @@
+<section class="new-note">
+    <h3>Add new note</h3>
+    <form #noteForm="ngForm" id="note-edit-form" (ngSubmit)="submitForm(noteForm)">
+        <input [(ngModel)]="note.title" placeholder="title" name="title" #title="ngModel" required/>
+        <textarea [(ngModel)]="note.content" placeholder="note" #content="ngModel" name="content" required></textarea>
+        <button type="submit" [disabled]="!noteForm.form.valid">save</button>
+    </form>
+</section>
+
 <section class="notes">
     <h3>Notes</h3>
     <ul>
         <li *ngFor="let note of _notes" class="card">
-        <span class="title">{{note.title}}:</span> {{note.content}}
+            <button (click)="deleteNote(note.id, $event)">x</button>
+            <span class="title">{{note.title}}</span> {{note.content}}
+            <button (click)="updateNote(note)">update</button>
         </li>
     </ul>
 </section>
