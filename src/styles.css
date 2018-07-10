@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css");
+* {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  color: #444;
+  line-height: 1.5;
+}
+
+nav,
+footer {
+  padding: 1% 0;
+}
+
+nav {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+nav ul{
+  padding-left: 0px;
+}
+
+header {
+  padding: 12% 0;
+}
+
+section {
+  min-height: 200px;
+  padding: 6% 0;
+  background-color: #bbb;
+}
+
+section:nth-child(even) {
+  background-color: #ddd;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li > span {
+  display: block;
+  font-weight: bold;
+}
+
+.folders ul li, .tags ul li {
+  background-color: #eee;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.folders li button, .tags li button {
+  float: right;
+  border: 0;
+  background: none;
+}
+
+.logout {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

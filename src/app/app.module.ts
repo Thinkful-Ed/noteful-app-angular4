@@ -13,8 +13,29 @@ import { AppComponent } from './app.component';
 import { NotesComponent } from './notes/notes.component';
 import { FoldersComponent } from './folders/folders.component';
 import { TagsComponent } from './tags/tags.component';
+import { LoginComponent } from './login/login.component';
 
+import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from './auth/auth.service';
+import {
+      AuthGuardService as AuthGuard
+    } from './auth/auth-guard.service';
+import { JwtModule } from '@auth0/angular-jwt';
 
+const appRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'notes', component: NotesComponent, canActivate: [AuthGuard] },
+  { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] },
+  { path: 'folders', component: FoldersComponent, canActivate: [AuthGuard] },
+  { path: '**',
+    redirectTo: '/notes',
+    pathMatch: 'full'
+  }
+];
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -22,11 +43,24 @@ import { TagsComponent } from './tags/tags.component';
     NotesComponent,
     FoldersComponent,
     TagsComponent,
+    LoginComponent,
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3001', 'localhost:8080'],
+        blacklistedRoutes: ['localhost:3001/auth/']
+      }
+    }), 
+RouterModule.forRoot(
+  appRoutes,
+  { enableTracing: true } // <-- debugging purposes only
+),
   ],
   providers: [
     NotesService,
