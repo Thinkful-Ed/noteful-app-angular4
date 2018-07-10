@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Note } from '../models';
+import { Note, Folder, Tag } from '../models';
 import { NotesService } from '../_services/notes.service';
+import { FolderService } from '../_services/folder.service';
+import { TagService } from '../_services/tag.service';
 
 @Component({
   selector: 'app-notes',
@@ -12,8 +14,55 @@ export class NotesComponent implements OnInit {
 
   @Input() _notes;
   
-  constructor(private notesService: NotesService) { }
+  constructor(
+    private notesService: NotesService,
+    private folderService: FolderService,
+    private tagService: TagService) { }
 
+  // Get and serve folder dropdown
+  folder = new Folder();
+  folders: Folder[];
+
+  // Get and serve tags dropdown
+  tag = new Tag();
+  tags: Tag[];
+
+  // FOLDERS
+
+  getFolders() {
+    return this.folderService.getFolders()
+      .subscribe(folders => this.folders = folders, (err) => console.log(err), () => this.getTags());
+  }
+
+  newFolder(folders: Folder[]) {
+    this.folders = folders;
+  }
+
+  getFolder(folder) {
+    if (typeof folder === 'string') {
+      const found = this.folders.find(f => f.id === folder);
+      if (found) {
+        return found.name;
+      }
+    } else if (typeof folder === 'object') {
+      return folder.name;
+    }
+    return folder;
+  }
+
+
+  // TAGS
+
+  getTags() {
+    return this.tagService.getTags()
+      .subscribe(tags => this.tags = tags, (err) => console.log(err), () => this.getNotes());
+  }
+
+  newTag(tags: Tag[]) {
+    this.tags = tags;
+  }
+
+  // NOTES
   getNotes(): void {
     this.notesService.getNotes()
       .subscribe(notes => this._notes = notes);
@@ -63,6 +112,8 @@ export class NotesComponent implements OnInit {
   
   ngOnInit() {
     this.getNotes();
+    this.getFolders();
+    this.getTags();
   }
 
 }

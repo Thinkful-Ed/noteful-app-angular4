@@ -3,6 +3,13 @@
     <form #noteForm="ngForm" id="note-edit-form" (ngSubmit)="submitForm(noteForm)">
         <input [(ngModel)]="note.title" placeholder="title" name="title" #title="ngModel" required/>
         <textarea [(ngModel)]="note.content" placeholder="note" #content="ngModel" name="content" required></textarea>
+        <select [(ngModel)]="note.folderId" #folderId="ngModel" name="folderId">
+            <option value="" selected="">Folder</option>
+            <option *ngFor="let folder of folders" value="{{folder.id}}">{{folder.name}}</option>
+        </select>
+        <select multiple [(ngModel)]="note.tags" #tagsNote="ngModel" name="tags" *ngIf="tags">
+            <option *ngFor="let tag of tags" value="{{tag.id}}">{{tag.name}}</option>
+        </select>
         <button type="submit" [disabled]="!noteForm.form.valid">save</button>
     </form>
 </section>
@@ -13,6 +20,12 @@
         <li *ngFor="let note of _notes" class="card">
             <button (click)="deleteNote(note.id, $event)">x</button>
             <span class="title">{{note.title}}</span> {{note.content}}
+            <span class="details">Folder: {{ getFolder(note.folderId) }} </span>
+            <span class="details">Tags:
+                <ul>
+                    <li *ngFor="let tag of note.tags">{{tag.name}}</li>
+                </ul>
+            </span>
             <button (click)="updateNote(note)">update</button>
         </li>
     </ul>

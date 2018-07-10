@@ -6,9 +6,13 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 import { NotesService } from './_services/notes.service';
 import { BaseService } from './_services/base.service';
+import { FolderService } from './_services/folder.service';
+import { TagService } from './_services/tag.service';
 
 import { AppComponent } from './app.component';
 import { NotesComponent } from './notes/notes.component';
+import { FoldersComponent } from './folders/folders.component';
+import { TagsComponent } from './tags/tags.component';
 
 
 
@@ -16,6 +20,8 @@ import { NotesComponent } from './notes/notes.component';
   declarations: [
     AppComponent,
     NotesComponent,
+    FoldersComponent,
+    TagsComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +30,9 @@ import { NotesComponent } from './notes/notes.component';
   ],
   providers: [
     NotesService,
-  BaseService
+    BaseService,
+    FolderService,
+    TagService,
 ],
   bootstrap: [AppComponent]
 })
